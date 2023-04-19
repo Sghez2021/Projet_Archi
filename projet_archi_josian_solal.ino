@@ -1,4 +1,3 @@
-#include <SimpleTimer.h>
 #include <Adafruit_NeoPixel.h>
 #define PIN            5 // Pin de connexion du bandeau
 #define PIN1  7
@@ -18,11 +17,23 @@ Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS, PIN2, NEO_GRB + NEO_KHZ
   const unsigned long interval = 100;
   const unsigned long dpH = 35;
   const unsigned long tpgenere = 2000;
+  
+  const unsigned long vitesseone = 1000;
+  const unsigned long vitessetwo =950;
+  unsigned long vitessethree = 1015;
+
+
+   unsigned long previousMillisvit = 0;
+  unsigned long previousMillisvit2 = 0;
+  unsigned long previousMillisvit3 = 0;
 
 int b = NUMPIXELS-1;
+int a = NUMPIXELS-1;
+int c = NUMPIXELS-1;
 int hauteur = 0;
 int joysticky = A0;
 int joystickx = A1;
+
 void setup() {
   pixels.begin(); // Initialisation du bandeau
   pixels.setBrightness(50); // Param de la luminosité
@@ -45,28 +56,32 @@ void setup() {
  
   pixels2.show(); // Affichage
 
- /* pinMode(A0, INPUT_PULLUP);
-  pinMode(A1, INPUT_PULLUP);*/
+
   Serial.begin(9600);
  
 }
+
 
 void loop() {
   Serial.println(analogRead(joysticky));
     unsigned long currentMillis = millis();
 
-  if(currentMillis - previousMillis3 >= tpgenere){
-    previousMillis3 = currentMillis;
 
+   if(currentMillis - previousMillisvit2 >= vitessetwo){
+    previousMillisvit2 = currentMillis;
+      a= looptwo(a);
+  }
+genereSecond();
 
+  if(currentMillis - previousMillisvit >= vitesseone){
+    previousMillisvit = currentMillis;
+   b=looptwo(b);
    
   }
-genere();
 
-  if(currentMillis - previousMillis >= interval){
-    previousMillis = currentMillis;
-    loop2();
-   
+   if(currentMillis - previousMillisvit3>= vitessethree){
+    previousMillisvit3 = currentMillis;
+  c=looptwo(c);
   }
  
 
@@ -80,6 +95,10 @@ genere();
   pixels.clear();
 pixels2.clear();
 pixels1.clear();
+
+if((hauteur == b && analogRead(joystickx) > 510) || (hauteur == c && analogRead(joystickx) > 500 && analogRead(joystickx) < 510) || (hauteur == a && analogRead(joystickx) < 500)) {
+  exit(0);
+}
 }
 
 void genere(){
@@ -95,14 +114,53 @@ pixels1.setPixelColor(b, 150, 150, 200);
 pixels1.show(); // Affichage
 }
 
-void loop2 () {
-   
 
- b--;
+void genereSecond(){
+    if(b == -1  ){
+  b=NUMPIXELS-1;
+
+}
+
+   if( a == -1 ){
+  a=NUMPIXELS-1;
+}
+
+
+    if( c == -1){
+  c=NUMPIXELS-1;
+}
+pixels.setPixelColor(b, 0, 255, 0);
+pixels.show(); // Affichage
+pixels2.setPixelColor(c, 0, 0, 255);
+pixels2.show(); // Affichage
+
+pixels1.setPixelColor(a, 150, 150, 200);
+pixels1.show(); // Affichage
+}
+
+void loopone () {
+   b--;
+
 pixels.clear();
 pixels2.clear();
 pixels1.clear();
    
+}
+
+int looptwo(int e){  
+    e--;
+  pixels.clear();
+pixels2.clear();
+pixels1.clear();
+return e;
+}
+
+void loopthree(){
+  
+    c--;  
+  pixels.clear();
+pixels2.clear();
+pixels1.clear();
 }
 
 
@@ -110,8 +168,9 @@ void loop1(){
   
   if (analogRead(joystickx) > 510){
    pixels1.setPixelColor(hauteur,255,0,0);
-   
     pixels1.show();
+   
+    
 }else if(analogRead(joystickx) < 500){
   pixels.setPixelColor(hauteur,255,0,0);
     pixels.show();
@@ -137,4 +196,21 @@ void depH(){
  
 }
    
+}
+
+
+void bandeauOne(){
+  
+}
+
+void bandeauTwo(){
+  
+}
+
+void bandeauThree(){
+  
+}
+
+void progression(){
+   unsigned long currentMillis = millis();
 }
