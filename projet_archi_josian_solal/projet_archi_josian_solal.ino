@@ -18,15 +18,19 @@ Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS, PIN2, NEO_GRB + NEO_KHZ
   const unsigned long dpH = 35;
   const unsigned long tpgenere = 2000;
   
-  const unsigned long vitesseone = 1000;
+  const unsigned long vitesseone = 2000;
   const unsigned long vitessetwo =950;
   unsigned long vitessethree = 1015;
 
+   unsigned long previousMillisvitdeuxsec = 0;
 
    unsigned long previousMillisvit = 0;
   unsigned long previousMillisvit2 = 0;
   unsigned long previousMillisvit3 = 0;
-
+int gauche[]= {-2,-2,-2,-2,-2};
+int milieu[]={-2,-2,-2,-2,-2};
+int droite[]={-2,-2,-2,-2,-2};
+int u = 0;
 int b = NUMPIXELS-1;
 int a = NUMPIXELS-1;
 int c = NUMPIXELS-1;
@@ -37,14 +41,16 @@ int joystickx = A1;
 void setup() {
   pixels.begin(); // Initialisation du bandeau
   pixels.setBrightness(50); // Param de la luminosité
-
+milieu[0]= NUMPIXELS-1;
+    gauche[0]= NUMPIXELS-1;
+  droite[0]= NUMPIXELS-1;
   //on commence par afficher une LED
 
   pixels1.begin(); // Initialisation du bandeau
   pixels1.setBrightness(50); // Param de la luminosité
 
   //on commence par afficher une LED
-  pixels1.setPixelColor(11, 255, 0, 0);
+  //pixels1.setPixelColor(11, 255, 0, 0);
  
   pixels1.show(); // Affichage
 
@@ -52,7 +58,7 @@ void setup() {
   pixels2.setBrightness(50); // Param de la luminosité
 
   //on commence par afficher une LED
-  pixels2.setPixelColor(11, 255, 0, 0);
+  //pixels2.setPixelColor(11, 255, 0, 0);
  
   pixels2.show(); // Affichage
 
@@ -63,25 +69,37 @@ void setup() {
 
 
 void loop() {
-  Serial.println(analogRead(joysticky));
+//  Serial.println(analogRead(joysticky));
     unsigned long currentMillis = millis();
+
+genereSecond();
+if (u<5) {
+if(currentMillis - previousMillisvitdeuxsec >= 5000){
+    previousMillisvitdeuxsec = currentMillis;
+    u++;
+    gauche[u]=NUMPIXELS-1;
+  }
+}
+
+
 
 
    if(currentMillis - previousMillisvit2 >= vitessetwo){
     previousMillisvit2 = currentMillis;
-      a= looptwo(a);
+    for(int i=0; i<u+1; i++ ) {
+      gauche[i]= looptwo(gauche[i]);
+    }
   }
-genereSecond();
 
   if(currentMillis - previousMillisvit >= vitesseone){
     previousMillisvit = currentMillis;
-   b=looptwo(b);
+   milieu[0]=looptwo(milieu[0]);
    
   }
 
    if(currentMillis - previousMillisvit3>= vitessethree){
     previousMillisvit3 = currentMillis;
-  c=looptwo(c);
+  droite[0]=looptwo(droite[0]);
   }
  
 
@@ -90,17 +108,16 @@ genereSecond();
 
   depH();
   }
-  
+  Serial.println(presentdans(gauche,hauteur));
   loop1();
   pixels.clear();
 pixels2.clear();
 pixels1.clear();
-
-if((hauteur == b && analogRead(joystickx) > 510) || (hauteur == c && analogRead(joystickx) > 500 && analogRead(joystickx) < 510) || (hauteur == a && analogRead(joystickx) < 500)) {
+if((presentdans(gauche,hauteur) && analogRead(joystickx) < 500) || (presentdans(milieu,hauteur) && analogRead(joystickx) > 500 && analogRead(joystickx) < 510) || (presentdans(droite,hauteur) && analogRead(joystickx) > 510)) {
   exit(0);
 }
 }
-
+/*
 void genere(){
     if(b == -1){
   b=NUMPIXELS-1;
@@ -113,31 +130,35 @@ pixels2.show(); // Affichage
 pixels1.setPixelColor(b, 150, 150, 200);
 pixels1.show(); // Affichage
 }
-
+*/
 
 void genereSecond(){
-    if(b == -1  ){
-  b=NUMPIXELS-1;
+  
+    if(gauche[0] == -1  ){
+  gauche[0]=NUMPIXELS-1;}
 
+
+
+   if( milieu[0] == -1 ){
+  milieu[0]=NUMPIXELS-1;
 }
 
-   if( a == -1 ){
-  a=NUMPIXELS-1;
-}
 
-
-    if( c == -1){
-  c=NUMPIXELS-1;
+    if( droite[0] == -1){
+  droite[0]=NUMPIXELS-1;
 }
-pixels.setPixelColor(b, 0, 255, 0);
+for (int i=0; i<5; i++) {
+pixels.setPixelColor(gauche[i], 0, 255, 0);
 pixels.show(); // Affichage
-pixels2.setPixelColor(c, 0, 0, 255);
+pixels2.setPixelColor(milieu[i], 0, 0, 255);
 pixels2.show(); // Affichage
-
-pixels1.setPixelColor(a, 150, 150, 200);
-pixels1.show(); // Affichage
+pixels1.setPixelColor(droite[i], 150, 150, 200);
+pixels1.show();
+}
+ // Affichage
 }
 
+/*
 void loopone () {
    b--;
 
@@ -145,7 +166,7 @@ pixels.clear();
 pixels2.clear();
 pixels1.clear();
    
-}
+}*/
 
 int looptwo(int e){  
     e--;
@@ -155,6 +176,7 @@ pixels1.clear();
 return e;
 }
 
+/*
 void loopthree(){
   
     c--;  
@@ -162,7 +184,7 @@ void loopthree(){
 pixels2.clear();
 pixels1.clear();
 }
-
+*/
 
 void loop1(){    
   
@@ -198,6 +220,13 @@ void depH(){
    
 }
 
+bool presentdans(int list[], int val) {
+  for(int i = 0; i < 5; i++) {
+        if(list[i] == val) {
+            return true;}
+    }
+    return false;
+}
 
 void bandeauOne(){
   
