@@ -7,7 +7,7 @@
 
 <body>
    <header>
-    <h1>Bienvenue sur Meteor Tiles <img src="./meteor-solid.svg"/></h1>
+    <h1 class="titre">Bienvenue sur Meteor Tiles <img src="./meteor-solid.svg"/></h1>
  
    </header>
 
@@ -17,7 +17,7 @@
     <h2>Score :</h2>
    <?php  
 
-    $file = fopen("test.txt", "r");
+    $file = fopen("score.txt", "r");
     if ($file == null) {
         echo "Fichier non exitant";
     } else {
@@ -35,8 +35,16 @@
 
 <div class="classement">
 <h2>Classement :</h2>
-
-    <?php
+<table>
+    <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Pseudo </th>
+          <th>Score </th>
+    </tr>
+    </thead>
+    <tbody>
+           <?php
  $json = file_get_contents('records.json');
   
     // Decode the JSON file
@@ -45,10 +53,14 @@
     // Display data
     // print_r($json_data);
     for ($i = 0; $i <count($json_data) ; $i++) {
-        echo "<p>" . $json_data[$i]["nom"] . "/". $json_data[$i]["pseudo"] . " : ";
-        echo  $json_data[$i]["score"] . "</p>";
+        echo "<tr>" . "<td>" . $json_data[$i]["nom"] . "</td>". "<td>". $json_data[$i]["pseudo"] . " </td> ";
+        echo "<td>". $json_data[$i]["score"] ."</td>" ."</tr>";
     }
     ?>
+    </tbody>
+     
+</table>
+
 
     
 </div>
