@@ -56,6 +56,7 @@
         echo "<tr>" . "<td>" . $json_data[$i]["nom"] . "</td>". "<td>". $json_data[$i]["pseudo"] . " </td> ";
         echo "<td>". $json_data[$i]["score"] ."</td>" ."</tr>";
     }
+    
     ?>
     </tbody>
      
@@ -65,13 +66,24 @@
     
 </div>
 
-   </div>   
+   </div> 
+   <div class="boutonjeu">
+    <?php
+    $etat= $_POST['etat'];
+    if ($etat == 1){
+        echo "<button> Jouer </button>";
+    }else if($etat == -1){
+        echo "<button> Stop </button>";
 
-   
-<footer>
+    }
 
-</footer>
+?>
+   </div>  
+
 
 </body>
+<script>
+
+</script>
 
 </html>
