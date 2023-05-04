@@ -34,7 +34,7 @@ h1 img {
 .score{
     background-color: #B5B591;
     width: 50%;
-    height: 55vh;
+    height: 25vw;
     margin: auto;
     margin-right:1vw;
     color: #383636;
@@ -45,13 +45,14 @@ h1 img {
 .classement{
     background-color: white;
     width: 50%;
-    height: 55vh;
+    height: 25vw;
     color:#383636;
     margin: auto;  
     margin-left: 1vw; 
     padding: 1.5vw;
 border-radius:3vw;
 padding-left:2vw ;
+
 
 }
 .classement p{

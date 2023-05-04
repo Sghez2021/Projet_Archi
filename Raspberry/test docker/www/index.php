@@ -1,8 +1,10 @@
-<html>
+<!DOCTYPE html>
 
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 </head>
 
 <body>
@@ -68,8 +70,10 @@
 
    </div> 
    <div class="boutonjeu">
-    <?php
-    $etat= $_POST['etat'];
+    <?php   
+    // $etat= $_POST['etat'];
+    $etat= 1;
+
     if ($etat == 1){
         echo "<button> Jouer </button>";
     }else if($etat == -1){
@@ -83,6 +87,61 @@
 
 </body>
 <script>
+let etat = 1;
+
+// $(function(){
+//     console.log("page chargé");
+//     $.ajax({
+//         url:"index.php",
+//         type : 'POST',
+        
+//         data :{
+//             etat : etat,
+//         }, 
+//         dataType: 'text',
+//         success: function (resultat, statut) {
+                
+//          self.location.href = "index.php";
+             
+//             },      
+// })
+// })
+
+// $(".boutonjeu button").on("click", function(){
+//     etat = etat * -1 ;
+//     console.log(etat);
+//     $.ajax({
+//         url:"index.php",
+//         type : 'post',
+        
+//         data :{
+//             etat : etat,
+//         } , 
+//         dataType: 'text',
+//         success: function (resultat, statut) {
+               
+//        self.location.href = "index.php";
+            
+//             },         
+        
+// })
+// });
+
+$(".boutonjeu button").on("click", function(){
+       if (etat == 1){
+    etat = etat * -1 ;
+
+        <?php $etat = -1; ?>
+
+console.log(etat);
+
+       }else {
+    etat = etat * -1 ;
+
+        <?php $etat = 1; ?>
+console.log(etat);
+       }
+});
 
 </script>
 
