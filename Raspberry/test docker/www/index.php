@@ -70,78 +70,43 @@
 
    </div> 
    <div class="boutonjeu">
-    <?php   
+    <!-- <?php   
+    
     // $etat= $_POST['etat'];
-    $etat= 1;
 
-    if ($etat == 1){
-        echo "<button> Jouer </button>";
-    }else if($etat == -1){
-        echo "<button> Stop </button>";
 
-    }
+  
+    // if ($etat == 1){
+    //     echo "<button> Jouer </button>";
+    // }else if($etat == -1){
+    //     echo "<button> Stop </button>";
 
-?>
+    // }
+
+?> -->
    </div>  
 
 
 </body>
 <script>
 let etat = 1;
+$(function(){
+     if(etat == 1 ){
+        $('.boutonjeu').append($('<button>',{class : "lebout"}).text("Jouer"));
+   }
+})
+$(document).on("click",('.lebout') ,function(){
+    etat = etat * (-1);
 
-// $(function(){
-//     console.log("page chargé");
-//     $.ajax({
-//         url:"index.php",
-//         type : 'POST',
-        
-//         data :{
-//             etat : etat,
-//         }, 
-//         dataType: 'text',
-//         success: function (resultat, statut) {
-                
-//          self.location.href = "index.php";
-             
-//             },      
-// })
-// })
-
-// $(".boutonjeu button").on("click", function(){
-//     etat = etat * -1 ;
-//     console.log(etat);
-//     $.ajax({
-//         url:"index.php",
-//         type : 'post',
-        
-//         data :{
-//             etat : etat,
-//         } , 
-//         dataType: 'text',
-//         success: function (resultat, statut) {
-               
-//        self.location.href = "index.php";
-            
-//             },         
-        
-// })
-// });
-
-$(".boutonjeu button").on("click", function(){
-       if (etat == 1){
-    etat = etat * -1 ;
-
-        <?php $etat = -1; ?>
-
-console.log(etat);
-
-       }else {
-    etat = etat * -1 ;
-
-        <?php $etat = 1; ?>
-console.log(etat);
-       }
+    if(etat == 1 ){
+        $(".lebout").text("Jouer")
+   } else if (etat ==-1){
+    $(".lebout").text("Stop")
+   
+   }
 });
+
+
 
 </script>
 
