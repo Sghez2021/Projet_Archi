@@ -1,7 +1,13 @@
+<?php
+$page = $_SERVER['PHP_SELF'];
+$sec = "5";
+?>
+
 <!DOCTYPE html>
 
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
     <link rel="stylesheet" href="./style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
@@ -26,7 +32,7 @@
         //Output lines until EOF is reached
         while (!feof($file)) {
             $line = fgets($file);
-            echo $line . "<br>";
+            echo "<div class='affichagescoredanscore'>" . $line . "</div>";
         }
 
         fclose($file);
@@ -40,8 +46,7 @@
 <table>
     <thead>
         <tr>
-          <th>Nom</th>
-          <th>Pseudo </th>
+          <th>Nom</th>        
           <th>Score </th>
     </tr>
     </thead>
@@ -55,7 +60,7 @@
     // Display data
     // print_r($json_data);
     for ($i = 0; $i <count($json_data) ; $i++) {
-        echo "<tr>" . "<td>" . $json_data[$i]["nom"] . "</td>". "<td>". $json_data[$i]["pseudo"] . " </td> ";
+        echo "<tr>" . "<td>" . $json_data[$i]["nom"] . "</td>";
         echo "<td>". $json_data[$i]["score"] ."</td>" ."</tr>";
     }
     
@@ -63,27 +68,50 @@
     </tbody>
      
 </table>
-
-
     
 </div>
 
    </div> 
+
    <div class="boutonjeu">
-    <!-- <?php   
-    
-    // $etat= $_POST['etat'];
+   <?php
+
+// Variable avec une valeur par défaut
+$ma_variable = $_POST['etat'];
+
+// Vérifier si une valeur a été définie dans la partie script
+if (isset($_POST['etat'])) {
+  // Modifier la variable avec la nouvelle valeur
+  $ma_variable = $_POST['etat'];
+}
+
+// Si etat = 1 c false par contre si c -1 alors true
+if ($ma_variable == 1 ){
+// Le nom du fichier que vous souhaitez écrire
+$fichier = 'play.txt';
+
+// Le contenu que vous souhaitez écrire dans le fichier
+$contenu = 'False';
+
+// Écrire le contenu dans le fichier et remplacer l'ancien contenu
+file_put_contents($fichier, $contenu, 0);
+} else {
+    // Le nom du fichier que vous souhaitez écrire
+$fichier = 'play.txt';
+
+// Le contenu que vous souhaitez écrire dans le fichier
+$contenu = 'True';
+
+// Écrire le contenu dans le fichier et remplacer l'ancien contenu
+file_put_contents($fichier, $contenu, 0);
+}
 
 
-  
-    // if ($etat == 1){
-    //     echo "<button> Jouer </button>";
-    // }else if($etat == -1){
-    //     echo "<button> Stop </button>";
 
-    // }
+?>
 
-?> -->
+
+
    </div>  
 
 

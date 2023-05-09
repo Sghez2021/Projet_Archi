@@ -150,3 +150,13 @@ tr:hover {
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
 }
+
+
+.affichagescoredanscore {
+    font-size:8vw;
+    font-weight: bold;
+    width:fit-content;
+    height:fit-content;
+    margin:auto;
+    
+}
