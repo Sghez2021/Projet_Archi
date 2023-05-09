@@ -10,21 +10,20 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ80
 Adafruit_NeoPixel pixels1 = Adafruit_NeoPixel(NUMPIXELSgrand, PIN1, NEO_GRB + NEO_KHZ800);
 
 Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS, PIN2, NEO_GRB + NEO_KHZ800);
-
+bool play = true;
  unsigned long previousMillis = 0;
   unsigned long previousMillis2 = 0;
   unsigned long previousMillis3 = 0;
   const unsigned long interval = 100;
   const unsigned long dpH = 60;
   const unsigned long tpgenere = 2000;
-  
   const unsigned long vitesseone = 2000;
   const unsigned long vitessetwo =950;
   unsigned long vitessethree = 1015;
    unsigned long vitessegauche[] = {0,0,0,0,0};
    unsigned long vitessemillieu[] = {0,0,0,0,0};
      unsigned long vitessedroite[] = {0,0,0,0,0};
-
+unsigned long previousmilis = 0;
    unsigned long previousMillisvitdeuxsec = 0;
    unsigned long previousMillisvit[] = {0,0,0,0,0};
   unsigned long previousMillisvit2[] = {0,0,0,0,0};
@@ -39,7 +38,7 @@ int c = 0;
 int hauteur = 0;
 int joysticky = A0;
 int joystickx = A1;
-int score = A2;
+int score = 0;
 int scored = 0;
 
 void setup() {
@@ -59,13 +58,31 @@ void setup() {
   pixels2.setBrightness(50); // Param de la luminosité
   pixels2.show(); // Affichage
   Serial.begin(9600);
+  Serial1.begin(9600);
 }
 long fonctionpoursolalouninou(){
   return random(200,800);
 }
+void envoi() {
+  Serial1.println(score);
+}
 
 void loop() {
- Serial.println(analogRead(joystickx));
+unsigned long currentMilliss = millis();
+
+  
+  if(play) {
+    envoi();
+  if(currentMilliss - previousmilis >= 1000){
+  previousmilis = currentMilliss;
+  score+=100;
+  }
+    loop3();
+  }
+}
+
+void loop3() {
+ //Serial.println(analogRead(joystickx));
  
     unsigned long currentMillis = millis();
 analogWrite(score,scored + (currentMillis* 0.002) );
@@ -121,7 +138,8 @@ for(int i=0; i<=u; i++ ) {
 pixels2.clear();
 pixels1.clear();
 if((presentdans(gauche,hauteur) && analogRead(joystickx) < 500) || (presentdans(milieu,hauteur) && analogRead(joystickx) > 500 && analogRead(joystickx) < 515) || (presentdans(droite,hauteur) && analogRead(joystickx) > 515)) {
-  exit(0);
+  play=false;
+  score=0;
 }
 }
 
