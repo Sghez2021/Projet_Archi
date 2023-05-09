@@ -65,7 +65,7 @@ long fonctionpoursolalouninou(){
 }
 
 void loop() {
- 
+ Serial.println(analogRead(joystickx));
  
     unsigned long currentMillis = millis();
 analogWrite(score,scored + (currentMillis* 0.002) );
@@ -120,7 +120,7 @@ for(int i=0; i<=u; i++ ) {
   pixels.clear();
 pixels2.clear();
 pixels1.clear();
-if((presentdans(gauche,hauteur) && analogRead(joystickx) < 500) || (presentdans(milieu,hauteur) && analogRead(joystickx) > 500 && analogRead(joystickx) < 510) || (presentdans(droite,hauteur) && analogRead(joystickx) > 510)) {
+if((presentdans(gauche,hauteur) && analogRead(joystickx) < 500) || (presentdans(milieu,hauteur) && analogRead(joystickx) > 500 && analogRead(joystickx) < 515) || (presentdans(droite,hauteur) && analogRead(joystickx) > 515)) {
   exit(0);
 }
 }
@@ -178,7 +178,7 @@ return e;
 
 void loop1(){    
   
-  if (analogRead(joystickx) > 510){
+  if (analogRead(joystickx) > 515){
    pixels1.setPixelColor(hauteur,255,0,0);
     pixels1.show();
    
@@ -186,7 +186,7 @@ void loop1(){
 }else if(analogRead(joystickx) < 500){
   pixels.setPixelColor(hauteur,255,0,0);
     pixels.show();
-}else if(analogRead(joystickx) > 500 && analogRead(joystickx) < 510){
+}else if(analogRead(joystickx) > 500 && analogRead(joystickx) < 515){
   pixels2.setPixelColor(hauteur,255,0,0);
     pixels2.show();
 }
