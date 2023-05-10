@@ -8,6 +8,7 @@ Reception des données émise par un Arduino branché
 
 import serial
 import serial.tools.list_ports
+import os
 
 print("Recherche d'un port serie...")
 
@@ -46,14 +47,35 @@ if (len(ports) != 0): # on a trouvé au moins un port actif
     
     print('Connexion a ' + arduino.name + ' a un baud rate de ' + str(baud))
 
+  #On récupère le contenue du fichier envoie puis on l'envoie au port connecté
+    fichier = './play.txt'
+    derniere_modification = os.path.getmtime(fichier)
+
+with open('derniere_modification.txt', 'w') as f:
+    f.write(str(derniere_modification))
+
+# Vérifier si la date de modification a changé depuis la dernière fois
+with open('derniere_modification.txt', 'r') as f:
+    derniere_modification_sauvegardee = float(f.read().strip())
+
+if derniere_modification > derniere_modification_sauvegardee:
+    # Le fichier a été modifié, lire son contenu
+    with open('./play.txt') as etat:          
+        arduino.write(etat.readLines())
+    # Faire quelque chose avec le contenu du fichier
+
+    
+		
+        
+		
     # si on reçoit un message, on l'affiche
-    while True:
-        data = arduino.readline()
-        if data:
-            with open('./score.txt', 'w') as f:
-                texte = data.decode("utf-8")
-                f.write(texte)
-                print (data)
+while True:
+    data = arduino.readline()
+    if data:
+        with open('./score.txt', 'w') as f:
+            texte = data.decode("utf-8")
+            f.write(texte)
+            print (data)
 
 else: # on n'a pas trouvé de port actif
     print("Aucun port actif n'a ete trouve")

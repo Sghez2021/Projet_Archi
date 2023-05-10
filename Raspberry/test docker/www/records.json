@@ -1,16 +1,11 @@
 [{
     "nom" : "Josian",
-    "score" : 5000,
-    "pseudo" : "Kaituro"
+    "score" : 5000
+    
 },
 {
     "nom" : "Solal",
-    "score" : 80000,
-    "pseudo" : "Solalouninou"  
-},
-{
-    "nom" : "Solal",
-    "score" : 80000,
-    "pseudo" : "Solalouninou"     
+    "score" : 80000
+    
 }
 ]
