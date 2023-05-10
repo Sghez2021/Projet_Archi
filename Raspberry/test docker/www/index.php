@@ -1,8 +1,3 @@
-<?php
-$page = $_SERVER['PHP_SELF'];
-$sec = "10";
-?>
-
 <!DOCTYPE html>
 
 <head>
@@ -14,19 +9,39 @@ $sec = "10";
 </head>
 
 <body>
+    <?php
+// $page = $_SERVER['PHP_SELF'];
+// $sec = "10";
+?>
    <header>
     <h1 class="titre">Bienvenue sur Meteor Tiles <img src="./meteor-solid.svg"/></h1>
  
    </header>
 
 <input class="playername" type="text" placeholder="entrez votre nom de joueur">
+<p id="result"></p>
 <?php
 $jsonFile = 'records.json';
 $jsonData = file_get_contents($jsonFile);
 $array = json_decode($jsonData, true);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $myVariable = $_POST['myVariable'];
-    echo "<p>" . $myVariable . "</p>";
+     if (isset($_POST['myVariable'])) {
+        // Récupérez la valeur de 'myVariable'
+       
+        // echo "succès";
+        // Par exemple, affichez-la ou effectuez d'autres opérations
+        $response = array('message' => 'Succès');
+        echo json_encode($response);
+        // Répondez au client avec une réponse appropriée
+        // echo 'La requête POST a été traitée avec succès. Variable reçue : ' . $myVariable;
+       
+    } else {
+        // Répondre avec une erreur si la requête n'est pas de type POST
+        header('HTTP/1.1 405 Method Not Allowed');
+        echo 'Cette URL n\'accepte que les requêtes POST.';
+    }
+    
   }
 // $joueur = array(
 //   'nom' => ,
@@ -127,50 +142,12 @@ $contenu = 'True';
 // Écrire le contenu dans le fichier et remplacer l'ancien contenu
 file_put_contents($fichier, $contenu, 0);
 }
-
-
-
 ?>
-
-
 
    </div>  
 
 
 </body>
-<script>
-let etat = 1;
-$(function(){
-     if(etat == 1 ){
-        $('.boutonjeu').append($('<button>',{class : "lebout"}).text("Jouer"));
-   }
-})
-$(document).on("click",('.lebout') ,function(){
-    etat = etat * (-1);
-
-    if(etat == 1 ){
-        $(".lebout").text("Jouer")
-   } else if (etat ==-1){
-    $(".lebout").text("Stop")
-   
-   }
-});
-$('.playername').keydown(function(event) {
-    if (event.which === 13) { // Vérifie si la touche pressée est "Entrée" (code 13)
-      var myVariable = $(this).val();  
-      console.log(myVariable) ;
-    $.ajax({
-      url: './',
-      type: 'POST',
-      data: { myVariable: myVariable },
-      success: function(response) {
-        $('#result').text(response);
-      }
-    });
-}
-});
-
-
-</script>
+<script src="index.js" async></script>
 
 </html>
