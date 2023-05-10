@@ -160,3 +160,13 @@ tr:hover {
     margin:auto;
     
 }
+
+.playername {
+    display: flex;
+    width: 13vw;
+    height: 2vw;
+    margin: auto;
+    border-radius:1vw;
+    font-size:0.8vw;
+    font-weight: bold;
+}

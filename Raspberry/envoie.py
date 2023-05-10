@@ -63,19 +63,8 @@ if derniere_modification > derniere_modification_sauvegardee:
     with open('./play.txt') as etat:          
         arduino.write(etat.readLines())
     # Faire quelque chose avec le contenu du fichier
-
-    
-		
         
-		
-    # si on reçoit un message, on l'affiche
-while True:
-    data = arduino.readline()
-    if data:
-        with open('./score.txt', 'w') as f:
-            texte = data.decode("utf-8")
-            f.write(texte)
-            print (data)
+
 
 else: # on n'a pas trouvé de port actif
     print("Aucun port actif n'a ete trouve")

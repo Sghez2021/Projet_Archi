@@ -1,6 +1,6 @@
 <?php
 $page = $_SERVER['PHP_SELF'];
-$sec = "5";
+$sec = "10";
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +19,28 @@ $sec = "5";
  
    </header>
 
+<input class="playername" type="text" placeholder="entrez votre nom de joueur">
+<?php
+$jsonFile = 'records.json';
+$jsonData = file_get_contents($jsonFile);
+$array = json_decode($jsonData, true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $myVariable = $_POST['myVariable'];
+    echo "<p>" . $myVariable . "</p>";
+  }
+// $joueur = array(
+//   'nom' => ,
+//   'score' => ,
+//   // Ajoutez d'autres attributs et valeurs selon vos besoins
+// );
+
+// $array[] = $joueur;
+
+// $newJsonData = json_encode($array);
+
+// file_put_contents($jsonFile, $newJsonData);
+
+?>
    <div class="container">
 
    <div class="score">
@@ -133,7 +155,20 @@ $(document).on("click",('.lebout') ,function(){
    
    }
 });
-
+$('.playername').keydown(function(event) {
+    if (event.which === 13) { // Vérifie si la touche pressée est "Entrée" (code 13)
+      var myVariable = $(this).val();  
+      console.log(myVariable) ;
+    $.ajax({
+      url: './',
+      type: 'POST',
+      data: { myVariable: myVariable },
+      success: function(response) {
+        $('#result').text(response);
+      }
+    });
+}
+});
 
 
 </script>
