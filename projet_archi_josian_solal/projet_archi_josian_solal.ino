@@ -59,6 +59,7 @@ void setup() {
   pixels2.show(); // Affichage
   Serial.begin(9600);
   Serial1.begin(9600);
+  Serial2.begin(9600);
 }
 long fonctionpoursolalouninou(){
   return random(200,800);
@@ -84,8 +85,8 @@ unsigned long currentMilliss = millis();
 void loop3() {
  //Serial.println(analogRead(joystickx));
  
-    unsigned long currentMillis = millis();
-analogWrite(score,scored + (currentMillis* 0.002) );
+ unsigned long currentMillis = millis();
+// analogWrite(score,scored + (currentMillis* 0.002) );
 genereSecond();
 if (u<5) {
 if(currentMillis - previousMillisvitdeuxsec >= 10000){
@@ -196,11 +197,9 @@ return e;
 
 void loop1(){    
   
-  if (analogRead(joystickx) > 515){
-   pixels1.setPixelColor(hauteur,255,0,0);
-    pixels1.show();
-   
-    
+if (analogRead(joystickx) > 515){
+ pixels1.setPixelColor(hauteur,255,0,0);
+ pixels1.show();    
 }else if(analogRead(joystickx) < 500){
   pixels.setPixelColor(hauteur,255,0,0);
     pixels.show();
@@ -224,9 +223,7 @@ void depH(){
   hauteur ++;
   }
  
-}
-   
-}
+} }
 
 bool presentdans(int list[], int val) {
   for(int i = 0; i < 5; i++) {
@@ -245,13 +242,6 @@ int ouca(int list[], int val){
   return -1;  
 }
 
-void bandeauTwo(){
-  
-}
-
-void bandeauThree(){
-  
-}
 
 void progression(){
    unsigned long currentMillis = millis();
