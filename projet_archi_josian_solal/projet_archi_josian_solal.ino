@@ -87,7 +87,7 @@ void loop3() {
  unsigned long currentMillis = millis();
 
 genereMeteore();
-if (u<5) {
+if (nbMeteor<5) {
 if(currentMillis - previousMillisvitdeuxsec >= 10000){
   previousMillisvitdeuxsec = currentMillis;
   nbMeteor++;
